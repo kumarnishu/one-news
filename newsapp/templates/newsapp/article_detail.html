@@ -1,0 +1,79 @@
+{%extends 'newsapp/index.html' %} {%block body%}
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-8">
+      <div class="news-detail">
+        <div class="news-detail-container">
+          <h1 class="big-title">{{article.title|truncatechars:60}}</h1>
+          <div class="news-detail-imageWrapper">
+            <img src="{{article.image.url}}" class="card-img-top" alt="..." />
+            <p class="date text-secondary">
+              Last Updated : {{article.last_updated|date:"M d, Y"}}
+            </p>
+            <p class="subtitle">
+              {{article.short_description|truncatechars:100}}
+            </p>
+            <p class="content">{{article.paragraph}}</p>
+          </div>
+          {%for more in more_detail%}
+          <p class="subtitle">{{more.short_description|truncatechars:100}}</p>
+          <div class="news-detail-imageWrapper">
+            {%if more.image%}
+            <img src="{{more.image.url}}" class="card-img-top" alt="..." />
+            {%endif%}
+            <p class="content">{{more.paragraph}}</p>
+          </div>
+          {%endfor%}
+        {%if user.is_staff%}
+          <a
+            class="update"
+            href="{% url 'newsapp:UpdateArticle' article.slug %}"
+            >Update</a
+          >
+          <a
+            class="delete"
+            href="{% url 'newsapp:DeleteArticle' article.slug %}"
+            >Delete</a
+          >
+{%endif%}
+
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="related_item">
+        <h1 class="bg-light text-secondary section-heading">Related News</h1>
+        {%for article in related_news%}
+        <div>
+          <a href="{% url 'newsapp:NewsDetail' article.slug  %}">
+            <img src="{{article.image.url}}" class="card-img-top" alt="..." />
+            <p class="date text-secondary">
+              <i>Last Updated : {{article.last_updated|date:"M d, Y"}}</i>
+            </p>
+            <p class="subtitle">
+              {{article.short_description|truncatechars:80}}
+            </p>
+          </a>
+        </div>
+        {%endfor%}
+      </div>
+    </div>
+  </div>
+</div>
+<!-- more articles -->
+
+<h1 class="bg-light text-secondary section-heading">Popular Articles</h1>
+<div class="gallery-grid">
+  {% for article in more_news %}
+  <div class="cards">
+    <a href="{% url 'newsapp:NewsDetail' article.slug  %}">
+      <img src="{{article.image.url}}" class="card-img-top" alt="..." />
+      <p class="date text-secondary">
+        <i> Last Updated : {{article.last_updated|date:"M d, Y"}}</i>
+      </p>
+      <p class="title">{{article.title|truncatechars:50}}</p>
+    </a>
+  </div>
+  {%endfor%}
+</div>
+{%endblock%}

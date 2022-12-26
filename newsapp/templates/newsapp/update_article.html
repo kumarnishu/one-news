@@ -1,0 +1,17 @@
+<!-- form-heading -->
+{%extends 'newsapp/base_form.html' %}
+<!-- form-heading -->
+{%block form-heading%} Update Article {%endblock%} {%block moreform%}
+<!--  -->
+{%if formset%}
+<!--  -->
+{{formset.management_form}} {%for form in formset%}
+<hr />
+{{form.as_div}} {%endfor%}
+<!--  -->
+{%endif%} {%endblock%}
+<!-- form footer -->
+{%block formfooter%}
+<p>last form is given for adding extra images and paragraphs</p>
+<a href="/">Cancel</a>
+{%endblock%}

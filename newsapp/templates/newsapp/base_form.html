@@ -1,0 +1,15 @@
+{%extends 'newsapp/index.html' %} {%block body%}
+<!--  -->
+<div class="form-wrapper">
+  <form class="crud-form" method="post" enctype="multipart/form-data">
+    <h3 class="section-heading">{%block form-heading%}{%endblock%}</h3>
+    {%csrf_token%}
+    <!--  -->
+    {{form.as_div}} {%block moreform%} {%endblock%}
+    <button type="submit">Submit</button>
+    <!--  -->
+    {%block formfooter%}
+    {%endblock%}
+  </form>
+</div>
+{%endblock%}

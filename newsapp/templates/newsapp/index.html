@@ -1,0 +1,40 @@
+{%extends 'newsapp/base.html' %} {%load static%}
+<!-- title -->
+{%block title%}
+<title>One News | No. 1 News Portal in India</title>
+{%endblock%}
+
+<!-- styles -->
+{%block styles%}
+<link rel="stylesheet" href="{% static 'css/style.css' %}" />
+{%endblock%}
+
+<!-- navbar -->
+{%block navbar%} {%include "newsapp/navbar.html" %} {%endblock%}
+<!-- body -->
+{%block body%}
+<!-- filtered news title -->
+{%if category%}
+<h1 class="bg-light text-secondary section-heading">{{category|upper}} News</h1>
+{%endif%}
+<!-- grid gallery -->
+<div class="gallery-grid">
+  {%for article in articles%}
+  <div class="cards">
+    <a href="{% url 'newsapp:NewsDetail' article.slug  %}">
+      <img src="{{article.image.url}}" class="card-img-top" alt="..." />
+      <p class="date text-secondary">
+        <i>Last Updated : {{article.last_updated|date:"M d, Y"}}</i>
+      </p>
+      <p class="title">{{article.title|truncatechars:50}}</p>
+    </a>
+  </div>
+  {%empty%}
+  <h5 class="text-secondary">Sorry ! no articles found</h5>
+  <p class="text-secondary">try with a different keyword</p>
+  {%endfor%}
+</div>
+<!-- pagination -->
+{% include "newsapp/paginate.html" %} {%endblock%}
+<!-- footer -->
+{%block footer%}{% include "newsapp/footer.html" %} {%endblock%}
